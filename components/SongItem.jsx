@@ -26,9 +26,7 @@ const SongItem = ({ id, cover, title, artists }) => {
       },
     };
     const response = await axios.request(downloadoptions);
-    console.log(response.data);
     const url = response.data.link;
-    console.log(url);
     const file = await FileSystem.downloadAsync(
       url,
       FileSystem.documentDirectory + title + ".mp3"
