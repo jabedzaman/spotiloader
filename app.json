@@ -1,5 +1,23 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow spotiloader to access your photos.",
+          "savePhotosPermission": "Allow spotiloader to save photos.",
+          "cameraRollPermission": "Allow spotiloader to access your camera roll.",
+          "cameraRollTitle": "spotiloader Camera Roll",
+          "mediaLibraryPermission": "Allow spotiloader to access your media library.",
+          "mediaLibraryTitle": "spotiloader Media Library",
+          "mediaLibraryUsageDescription": "spotiloader needs access to your media library to save photos.",
+          "cameraRollUsageDescription": "spotiloader needs access to your camera roll to save photos.",
+          "photosUsageDescription": "spotiloader needs access to your photos to save photos.",
+          "savePhotosUsageDescription": "spotiloader needs access to your photos to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
+    ],
     "name": "spotiloader",
     "slug": "spotiloader",
     "version": "1.0.0",
@@ -18,13 +36,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jabedzaman.spotiloader"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.jabedzaman.spotiloader"
     },
     "web": {
       "favicon": "./assets/favicon.png"
