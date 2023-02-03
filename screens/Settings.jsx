@@ -201,11 +201,11 @@ const Info = () => {
               alignItems: "center",
               marginTop: 20,
             }}
-            onPress={() => openInBrowser(config.paypalUrl)}
+            onPress={() => openInBrowser(config.patreonUrl)}
           >
             <Icon
-              name="paypal"
-              type="font-awesome"
+              type="material-community"
+              name="patreon"
               size={26}
               color="#000"
               style={{ marginRight: 10 }}
@@ -216,7 +216,7 @@ const Info = () => {
                 fontWeight: "bold",
               }}
             >
-              PayPal
+              Patreon
             </Text>
           </TouchableOpacity>
           <View

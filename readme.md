@@ -1,6 +1,6 @@
 <a href="https://github.com/jabedzaman/spotiloader"><img src="/assets/iconlarge.png" align="left" height="80" width="80" ></a>
 # Spotiloader
-- **React Native Multiplatform** Music Downloader ,supports **Spotify only at this moment**. <br/>
+- **React Native Multiplatform** Music Downloader ,supports **Spotify & YouTube**. <br/>
 
 
 Download Spotfy Tracks or Playlists from URL and save them locally to listen while offline !!! 
@@ -12,6 +12,7 @@ Download Spotfy Tracks or Playlists from URL and save them locally to listen whi
 ### Supported Platforms:
 
 - Spotify
+- YouTube
 - (more coming soon)
 
 
@@ -19,7 +20,7 @@ Download Spotfy Tracks or Playlists from URL and save them locally to listen whi
 
 | Platform | Download | Status |
 |----------|----------|--------|
-| Android    |[![Download Button](https://img.shields.io/github/v/release/jabedzaman/spotiloader?color=7885FF&label=Android-Apk&logo=android&style=for-the-badge)](https://github.com/jabedzaman/)| ✅ Stable | 
+| Android    |[![Download Button](https://img.shields.io/github/v/release/jabedzaman/spotiloader?color=7885FF&label=Android-Apk&logo=android&style=for-the-badge)](https://github.com/jabedzaman/spotiloader/releases)| ✅ Stable | 
 
 ### Permissions required:
 
@@ -29,12 +30,10 @@ Download Spotfy Tracks or Playlists from URL and save them locally to listen whi
 ### Todos 
 
 - [ ] Add download progress bar
-- [ ] Add other platform support
-- [ ]  Add inbuilt player
+- [x] Add other platform support
 - [ ]  Add Dark Mode
 - [ ]  Add search history
-- [ ]  Add seach with suggestions
-- [ ]   Add downlaod with meta data
+- [ ]  Add downlaod with meta data
 - [ ]  Write Tests
 
 **GPL-3.0 License**

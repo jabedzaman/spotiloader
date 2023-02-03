@@ -20,7 +20,7 @@
     ],
     "name": "spotiloader",
     "slug": "spotiloader",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -37,17 +37,31 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jabedzaman.spotiloader"
+      "bundleIdentifier": "com.jabedzaman.spotiloader",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Allow spotiloader to access your photos.",
+        "NSPhotoLibraryAddUsageDescription": "Allow spotiloader to save photos."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.jabedzaman.spotiloader"
+      "package": "com.jabedzaman.spotiloader",
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_MEDIA_LOCATION"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a2cde989-521c-4c6c-8948-336b09633922"
+      }
     }
   }
 }

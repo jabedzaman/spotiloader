@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import Hero from "../components/Hero";
 import {
   Button,
   Icon,
@@ -25,17 +24,21 @@ import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from "expo-file-system";
 import permissionRequest from "../utils/permissionRequest";
 import secrets from "../config/apikey.config";
+import { Picker } from "@react-native-picker/picker";
+import { Alert } from "react-native";
 
 const Home = () => {
   const [input, setInput] = useState("");
   const [tracklist, setTracklist] = useState([]);
   const [track, setTrack] = useState([]);
+  const [info, setInfo] = useState([]);
   const [downloadlink, setDownloadlink] = useState("");
   const [downloading, setDownloading] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [networkError, setNetworkError] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
   const networkStatus = getNetworkStatus();
   const apiKey = secrets.apikey;
   const apiHost = secrets.apihost;
@@ -51,6 +54,16 @@ const Home = () => {
   };
 
   const getTracklist = async () => {
+    if (selectedValue === "1") {
+      getSpotifyPlaylist();
+    } else if (selectedValue === "2") {
+      getYoutbeTrack();
+    } else {
+      Alert.alert("WARNING!!", "Must select a source");
+    }
+  };
+
+  const getSpotifyPlaylist = async () => {
     if (!networkStatus) {
       setNetworkError(true);
       return;
@@ -71,6 +84,45 @@ const Home = () => {
       }, 5000);
       setLoading(false);
     }
+  };
+
+  const getYoutbeTrack = async () => {
+    if (!networkStatus) {
+      setNetworkError(true);
+      return;
+    }
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `https://ytdlapi.jabed.me/info?url=${input}`
+      );
+      console.log(response.data.embedinfo);
+      setInfo(response.data.embedinfo);
+      setLoading(false);
+    } catch (error) {
+      setError(true);
+      console.log(error);
+      setTimeout(() => {
+        setError(false);
+      }, 5000);
+      setLoading(false);
+    }
+  };
+
+  const saveytTrack = async (uri, title) => {
+    if (!networkStatus) {
+      setNetworkError(true);
+      return;
+    }
+    permissionRequest();
+    setDownloading(true);
+    const file = await FileSystem.downloadAsync(
+      `https://ytdlapi.jabed.me/download?url=${uri}`,
+      FileSystem.documentDirectory + `download.mp3`
+    );
+    setDownloading(false);
+    await MediaLibrary.createAssetAsync(file.uri);
+    setDownloaded(true);
   };
 
   const saveTrack = async (uri, title) => {
@@ -119,33 +171,19 @@ const Home = () => {
             value={input}
             onChangeText={(text) => setInput(text)}
           />
+          <Picker
+            selectedValue={selectedValue}
+            onValueChange={(itemValue) => setSelectedValue(itemValue)}
+            style={{
+              marginHorizontal: 20,
+            }}
+          >
+            <Picker.Item label="Select Source" value="0" />
+            <Picker.Item label="Spotify" value="1" />
+            <Picker.Item label="Youtube" value="2" />
+          </Picker>
         </View>
         <View>
-          <Button
-            type="solid"
-            title={
-              tracklist?.length > 0 && !track && !input
-                ? "       Clear tracks      "
-                : "        Get tracks        "
-            }
-            disabled={tracklist?.length === 0 && !input}
-            buttonStyle={{
-              backgroundColor: "green",
-              borderWidth: 2,
-              borderColor: "white",
-              borderRadius: 30,
-              alignItems: "center",
-              marginBottom: 20,
-            }}
-            containerStyle={{
-              width: 500,
-              alignSelf: "center",
-              alignItems: "center",
-            }}
-            onPress={
-              tracklist?.length > 0 && !input ? clearTracks : getTracklist
-            }
-          />
           {error && (
             <Text style={{ color: "red", textAlign: "center" }}>
               Something Went Wrong
@@ -153,6 +191,29 @@ const Home = () => {
           )}
         </View>
 
+        <Button
+          type="solid"
+          title={
+            tracklist?.length > 0 && !track && !input
+              ? "       Clear tracks      "
+              : "        Get tracks        "
+          }
+          disabled={!input && !tracklist?.length > 0}
+          buttonStyle={{
+            backgroundColor: "green",
+            borderWidth: 2,
+            borderColor: "white",
+            borderRadius: 30,
+            alignItems: "center",
+            marginBottom: 20,
+          }}
+          containerStyle={{
+            width: 500,
+            alignSelf: "center",
+            alignItems: "center",
+          }}
+          onPress={tracklist?.length > 0 && !input ? clearTracks : getTracklist}
+        />
         {!tracklist?.length > 0 && !track && (
           <View>
             <Text
@@ -178,8 +239,6 @@ const Home = () => {
             />
           </Overlay>
         )}
-
-        {!tracklist?.length > 0 && !loading && !input && !track && <Hero />}
 
         <View
           style={{
@@ -213,6 +272,49 @@ const Home = () => {
                   artists={track.artists}
                 />
               ))}
+            {info?.title && (
+              <View
+                style={{
+                  padding: 10,
+                  borderRadius: 10,
+                }}
+              >
+                <TouchableOpacity>
+                  <ListItem>
+                    <Image
+                      source={{ uri: info?.thumbnail_url }}
+                      style={{ width: 50, height: 50, alignSelf: "center" }}
+                    />
+                    <ListItem.Content>
+                      <ListItem.Title style={{ fontWeight: "800" }}>
+                        {info?.title}
+                      </ListItem.Title>
+                      <ListItem.Subtitle
+                        style={{
+                          color: "grey",
+                        }}
+                      >
+                        {info?.author_name}
+                      </ListItem.Subtitle>
+                    </ListItem.Content>
+                    <TouchableOpacity>
+                      {downloading ? (
+                        <ActivityIndicator size="small" color="grey" />
+                      ) : downloaded ? (
+                        <Icon name="check" type="material" color="green" />
+                      ) : (
+                        <Icon
+                          name="download"
+                          type="material-community"
+                          color="grey"
+                          onPress={() => saveytTrack(input, info?.title)}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  </ListItem>
+                </TouchableOpacity>
+              </View>
+            )}
             {track?.title && (
               <View
                 style={{
