@@ -1,4 +1,4 @@
-const version = "1.0.0";
+const version = "1.0.1";
 const name = "spotiloader";
 const downloadUrl = "https://jabed.me";
 const author = "Jabed Zaman";

@@ -18,7 +18,7 @@ const Info = () => {
   const githubUrl = config.githubUrl;
   const shareApp = () => {
     Share.share({
-      message: `Hey, check out this awesome app to download songs from Spotify! \n${appShareUrl}`,
+      message: `Hey, check out this awesome app to download songs! \n${appShareUrl}`,
     });
   };
   async function openInBrowser(url) {
