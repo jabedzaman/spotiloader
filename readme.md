@@ -37,5 +37,20 @@ Unleash the power of offline listening with SpotiLoader! Download your favorite 
 - [ ] Add downlaod with meta data
 - [ ] Write Tests
 
+### Want to Contribute 🙋‍♂️?
+COOL!! Your contributions will help make SpotiLoader more accessible to users around the world. Join in spreading the power of music globally!
+
+Here's how you can contribute:
+
+1. Clone the SpotiLoader repository.
+2. Create a new file with `YOUR_LANGUAGE_CODE.config.js` in `/trasnslations`
+3. Translate the relevant strings in the `/translations/en.config.js` in `YOUR_LANGUAGE_CODE.config.js`
+4. Submit a pull request with your changes.
+
+
+### License 
+
+**GPL-3.0** License This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
 ### Disclaimer
 Please note that the downloading of copyrighted music may be illegal in some countries. This app is intended for educational purposes only and demonstrate the capabilities of the software and its authors do not endorse or encourage any illegal activities, including the unauthorized downloading of copyrighted music. This app will not be held responsible for any legal consequences resulting from its use
