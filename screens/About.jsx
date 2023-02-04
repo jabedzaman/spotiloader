@@ -19,7 +19,7 @@ const About = () => {
   const name = config.name;
   const author = config.author;
   const [fontsLoaded] = useFonts({
-    Pacifico: require("../fonts/Pacifico.ttf"),
+    Pacifico: require("../assets/fonts/Pacifico.ttf"),
   });
 
   return (
