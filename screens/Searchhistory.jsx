@@ -128,6 +128,8 @@ const Searchhistory = () => {
                     style={{
                       fontSize: 16,
                       marginLeft: 10,
+                      color: "lightblue",
+                      textDecorationLine: "underline",
                     }}
                   >
                     {search}

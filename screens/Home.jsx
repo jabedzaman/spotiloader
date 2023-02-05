@@ -88,7 +88,6 @@ const Home = () => {
       saveRecentSearch(input);
     } else if (selectedValue === "1") {
       searchApi();
-      saveRecentSearch(input);
     } else {
       Alert.alert("WARNING!!", "Must select a source");
       saveRecentSearch(input);

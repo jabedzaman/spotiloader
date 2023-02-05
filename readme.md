@@ -8,10 +8,13 @@
 
 Unleash the power of offline listening with SpotiLoader! Download your favorite songs, playlists, and albums with ease. Fast, simple, and efficient !!! Say goodbye to buffering and hello to unlimited tunes with SpotiLoader! Enjoy high-quality MP3 audio !!!
 
+Even Keyword search is supported, just search for the song you want to download and download it with a single click.
+
 ### Supported Platforms:
 
 - Spotify
 - YouTube
+- Or just search keywords
 - (more coming soon)
 
 
@@ -33,7 +36,7 @@ Unleash the power of offline listening with SpotiLoader! Download your favorite 
 
 - [ ] Add download progress bar
 - [ ] Add Dark Mode [#1](https://github.com/jabedzaman/spotiloader/issues/1)
-- [ ] Add search history
+- [x] Add search history
 - [ ] Add downlaod with meta data
 - [ ] Write Tests
 
