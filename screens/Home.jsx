@@ -16,8 +16,8 @@ import {
   SearchBar,
 } from "react-native-elements";
 import axios from "axios";
-import SongItem from "../components/SongItem";
-import Header from "../components/Header";
+import SongItem from "./components/SongItem";
+import Header from "./components/Header";
 import { StatusBar } from "expo-status-bar";
 import getNetworkStatus from "../utils/getNetworkStatus";
 import * as MediaLibrary from "expo-media-library";
@@ -26,6 +26,8 @@ import permissionRequest from "../utils/permissionRequest";
 import secrets from "../config/apikey.config";
 import { Picker } from "@react-native-picker/picker";
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import saveRecentSearch from "../utils/saveRecentSearch";
 
 const Home = () => {
   const [input, setInput] = useState("");
@@ -56,10 +58,13 @@ const Home = () => {
   const getTracklist = async () => {
     if (selectedValue === "1") {
       getSpotifyPlaylist();
+      saveRecentSearch(input);
     } else if (selectedValue === "2") {
       getYoutbeTrack();
+      saveRecentSearch(input);
     } else {
       Alert.alert("WARNING!!", "Must select a source");
+      saveRecentSearch(input);
     }
   };
 
@@ -214,6 +219,7 @@ const Home = () => {
           }}
           onPress={tracklist?.length > 0 && !input ? clearTracks : getTracklist}
         />
+
         {!tracklist?.length > 0 && !track && (
           <View>
             <Text

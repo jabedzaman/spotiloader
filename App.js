@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./screens/Home";
 import Settings from "./screens/Settings";
 import About from "./screens/About";
+import Searchhistory from "./screens/Searchhistory";
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,13 @@ export default function App() {
             headerShown: false,
           }}
           component={About}
+        />
+        <Stack.Screen
+          name="SearchHistory"
+          options={{
+            headerShown: false,
+          }}
+          component={Searchhistory}
         />
       </Stack.Navigator>
     </NavigationContainer>

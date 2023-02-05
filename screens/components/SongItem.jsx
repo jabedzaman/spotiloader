@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { Icon, Image, ListItem } from "react-native-elements";
 import axios from "axios";
-import requestStoragePermission from "../utils/permissionRequest";
+import requestStoragePermission from "../../utils/permissionRequest";
 import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from "expo-file-system";
-import triggerNotification from "../utils/triggerNotification";
-import secrets from "../config/apikey.config";
+import triggerNotification from "../../utils/triggerNotification";
+import secrets from "../../config/apikey.config";
 
 const SongItem = ({ id, cover, title, artists }) => {
   const apiKey = secrets.apikey;
