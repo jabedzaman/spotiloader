@@ -28,6 +28,7 @@ import { Picker } from "@react-native-picker/picker";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import saveRecentSearch from "../utils/saveRecentSearch";
+import triggerNotification from "../utils/triggerNotification";
 
 const Home = () => {
   const [input, setInput] = useState("");
@@ -41,7 +42,9 @@ const Home = () => {
   const [error, setError] = useState(false);
   const [networkError, setNetworkError] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
+  const [results, setResults] = useState([]);
   const networkStatus = getNetworkStatus();
+  const [quality, setQuality] = useState("320kbps");
   const apiKey = secrets.apikey;
   const apiHost = secrets.apihost;
 
@@ -55,17 +58,51 @@ const Home = () => {
     },
   };
 
+  const loadQuality = async () => {
+    try {
+      const value = await AsyncStorage.getItem("quality");
+      if (value !== null) {
+        setQuality(value);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const download = async (url, title) => {
+    Alert.alert("Downloading", "Downloading " + title);
+    const file = await FileSystem.downloadAsync(
+      url,
+      FileSystem.documentDirectory + title + ".mp3"
+    );
+    await MediaLibrary.createAssetAsync(file.uri);
+    triggerNotification("Downloaded", title + " has been downloaded");
+  };
+
   const getTracklist = async () => {
-    if (selectedValue === "1") {
+    if (selectedValue === "2") {
       getSpotifyPlaylist();
       saveRecentSearch(input);
-    } else if (selectedValue === "2") {
+    } else if (selectedValue === "3") {
       getYoutbeTrack();
+      saveRecentSearch(input);
+    } else if (selectedValue === "1") {
+      searchApi();
       saveRecentSearch(input);
     } else {
       Alert.alert("WARNING!!", "Must select a source");
       saveRecentSearch(input);
     }
+  };
+
+  const searchApi = async () => {
+    const uri = `https://saavn.me/search/songs?query=${input}`.replace(
+      / /g,
+      "+"
+    );
+    const response = await axios.get(uri);
+    setResults(response.data.data.results);
+    console.log(response.data.data.results);
   };
 
   const getSpotifyPlaylist = async () => {
@@ -83,7 +120,6 @@ const Home = () => {
       setInput("");
     } catch (error) {
       setError(true);
-      console.log(error);
       setTimeout(() => {
         setError(false);
       }, 5000);
@@ -101,12 +137,10 @@ const Home = () => {
       const response = await axios.get(
         `https://ytdlapi.jabed.me/info?url=${input}`
       );
-      console.log(response.data.embedinfo);
       setInfo(response.data.embedinfo);
       setLoading(false);
     } catch (error) {
       setError(true);
-      console.log(error);
       setTimeout(() => {
         setError(false);
       }, 5000);
@@ -151,6 +185,17 @@ const Home = () => {
     setTrack([]);
   };
 
+  // const downloadtest = async (downloadUrl, tittle) => {
+  //   loadQuality();
+  //   if (quality === "320kbps") {
+  //     download(downloadUrl, track.title);
+  //   } else if (quality === "160kbps") {
+  //     Alert.alert("WARNING!!", "Must select a 160");
+  //   } else if (quality === "96kbps") {
+  //     Alert.alert("WARNING!!", "Must select a 96");
+  //   }
+  // };
+
   return (
     <SafeAreaView>
       <StatusBar style="dark" />
@@ -184,8 +229,9 @@ const Home = () => {
             }}
           >
             <Picker.Item label="Select Source" value="0" />
-            <Picker.Item label="Spotify" value="1" />
-            <Picker.Item label="Youtube" value="2" />
+            <Picker.Item label="Search Keyword" value="1" />
+            <Picker.Item label="Spotify" value="2" />
+            <Picker.Item label="Youtube" value="3" />
           </Picker>
         </View>
         <View>
@@ -362,6 +408,50 @@ const Home = () => {
                     </TouchableOpacity>
                   </ListItem>
                 </TouchableOpacity>
+              </View>
+            )}
+
+            {results?.length > 0 && (
+              <View>
+                {results?.map((result, key) => (
+                  <View key={key}>
+                    <TouchableOpacity>
+                      <ListItem>
+                        <Image
+                          source={{ uri: result.image[2].link }}
+                          style={{ width: 50, height: 50, alignSelf: "center" }}
+                        />
+                        <ListItem.Content>
+                          <ListItem.Title style={{ fontWeight: "800" }}>
+                            {result.name}
+                          </ListItem.Title>
+                          <ListItem.Subtitle
+                            style={{
+                              color: "grey",
+                            }}
+                          >
+                            {result.primaryArtists}
+                          </ListItem.Subtitle>
+                        </ListItem.Content>
+                        <ListItem.Chevron
+                          onPress={() => {
+                            loadQuality();
+                            if (quality === "320kbps") {
+                              console.log(result.downloadUrl[4].link);
+                              download(result.downloadUrl[4].link, result.name);
+                            } else if (quality === "160kbps") {
+                              console.log(result.downloadUrl[3].link);
+                              download(result.downloadUrl[3].link, result.name);
+                            } else if (quality === "96kbps") {
+                              console.log(result.downloadUrl[2].link);
+                              download(result.downloadUrl[2].link, result.name);
+                            }
+                          }}
+                        />
+                      </ListItem>
+                    </TouchableOpacity>
+                  </View>
+                ))}
               </View>
             )}
           </View>

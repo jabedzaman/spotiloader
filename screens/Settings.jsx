@@ -10,9 +10,12 @@ import { useNavigation } from "@react-navigation/native";
 import { Button, Icon, ListItem, Overlay, Text } from "react-native-elements";
 import config from "../config/app.config";
 import { StatusBar } from "expo-status-bar";
+import { Picker } from "@react-native-picker/picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Info = () => {
   const [visible, setVisible] = useState(false);
+  const [quality, setQuality] = useState("320kbps");
   const Navigation = useNavigation();
   const appShareUrl = config.downloadUrl;
   const githubUrl = config.githubUrl;
@@ -28,6 +31,17 @@ const Info = () => {
       console.error(error);
     }
   }
+  const loadQuality = async () => {
+    try {
+      const value = await AsyncStorage.getItem("quality");
+      if (value !== null) {
+        setQuality(value);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  loadQuality();
   return (
     <SafeAreaView>
       <StatusBar style="dark" />
@@ -38,6 +52,7 @@ const Info = () => {
           }}
         />
       )}
+
       <View
         style={{
           paddingHorizontal: 20,
@@ -65,6 +80,48 @@ const Info = () => {
             Settings
           </Text>
         </TouchableOpacity>
+      </View>
+
+      <View
+        style={{
+          paddingHorizontal: 20,
+          borderRadius: 20,
+          marginBottom: 20,
+        }}
+      >
+        <ListItem
+          onPress={() => {
+            return (
+              <Overlay>
+                <Text>Test</Text>
+              </Overlay>
+            );
+          }}
+        >
+          <Icon
+            name="music-note"
+            type="material"
+            color="#000"
+            style={{ marginRight: 10 }}
+          />
+          <ListItem.Content>
+            <ListItem.Title style={{ fontWeight: "700" }}>
+              Audio Quality
+            </ListItem.Title>
+          </ListItem.Content>
+          <Picker
+            style={{ width: 150 }}
+            selectedValue={quality}
+            onValueChange={(itemValue, itemIndex) => {
+              setQuality(itemValue);
+              AsyncStorage.setItem("quality", itemValue);
+            }}
+          >
+            <Picker.Item label="96kbps" value="96kbps" />
+            <Picker.Item label="160kbps" value="160kbps" />
+            <Picker.Item label="320kbps" value="320kbps" />
+          </Picker>
+        </ListItem>
       </View>
       <View
         style={{
