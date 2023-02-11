@@ -56,7 +56,7 @@ const Header = (props) => {
                 name="history"
                 type="material"
                 onPress={() => {
-                  Navigation.navigate("SearchHistory");
+                  Navigation.navigate("History");
                 }}
               />
               <View style={{ width: 20 }} />

@@ -2,14 +2,12 @@ import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon, ListItem } from "react-native-elements";
-import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import * as Clipboard from "expo-clipboard";
 
-const Searchhistory = () => {
+const History = ({navigation}) => {
   const [searches, setSearches] = useState([]);
-  const Navigation = useNavigation();
   async function loadAndDisplayRecentSearches() {
     try {
       const recentSearches = await AsyncStorage.getItem("recentSearches");
@@ -39,7 +37,7 @@ const Searchhistory = () => {
             alignItems: "center",
             width: "100%",
           }}
-          onPress={() => Navigation.goBack()}
+          onPress={() => navigation.goBack()}
         >
           <Icon name="arrow-back-ios" type="material" />
           <Text
@@ -149,4 +147,4 @@ const Searchhistory = () => {
   );
 };
 
-export default Searchhistory;
+export default History;

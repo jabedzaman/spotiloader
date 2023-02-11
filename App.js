@@ -1,46 +1,40 @@
-import * as React from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./screens/Home";
 import Settings from "./screens/Settings";
 import About from "./screens/About";
-import Searchhistory from "./screens/Searchhistory";
+import History from "./screens/History";
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Home"
           options={{
-            headerShown: false,
+          headerShown: false,
           }}
-          component={Home}
-        />
-        <Stack.Screen
-          name="Settings"
-          options={{
-            headerShown: false,
-          }}
-          component={Settings}
-        />
-        <Stack.Screen
-          name="About"
-          options={{
-            headerShown: false,
-          }}
-          component={About}
-        />
-        <Stack.Screen
-          name="SearchHistory"
-          options={{
-            headerShown: false,
-          }}
-          component={Searchhistory}
-        />
+        name="Home" component={Home} />
+        <Stack.Screen 
+        options={{
+          headerShown: false,
+        }}
+        name="Settings" component={Settings} />
+        <Stack.Screen 
+        options={{
+          headerShown: false,
+        }}
+        name="About" component={About} />
+        <Stack.Screen 
+        options={{
+          headerShown: false,
+        }}
+        name="History" component={History} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default App;
