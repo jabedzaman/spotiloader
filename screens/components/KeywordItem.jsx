@@ -1,63 +1,58 @@
-import React, { useState } from "react";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
 import { Icon, Image, ListItem } from "react-native-elements";
-import axios from "axios";
 import requestStoragePermission from "../../utils/permissionRequest";
 import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from "expo-file-system";
 import triggerNotification from "../../utils/triggerNotification";
-import secrets from "../../config/apikey.config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const SongItem = ({ id, cover, title, artists }) => {
-  const apiKey = secrets.apikey;
-  const apiHost = secrets.apihost;
+const KeywordItem = ({ cover, name, primaryArtists, downloadUrl }) => {
   const [downloaded, setDownloaded] = useState(false);
   const [downloading, setDownloading] = useState(false);
-  const downloadTrack = async (id, title) => {
+  const [quality, setQuality] = useState("320kbps");
+  const download = async (url) => {
     requestStoragePermission();
     setDownloading(true);
-    const downloadoptions = {
-      method: "GET",
-      url: "https://spotify-downloader.p.rapidapi.com/SpotifytrackDownloader",
-      params: { id: id },
-      headers: {
-        "X-RapidAPI-Key": apiKey,
-        "X-RapidAPI-Host": apiHost,
-      },
-    };
-    const response = await axios.request(downloadoptions);
-    const url = response.data.link;
     const file = await FileSystem.downloadAsync(
       url,
-      FileSystem.documentDirectory + title + ".mp3"
+      FileSystem.documentDirectory + name + ".mp3"
     );
-    let progress = 0;
-    progress = (file.totalBytesWritten / file.totalBytesExpectedToWrite) * 100;
     await MediaLibrary.createAssetAsync(file.uri);
-    triggerNotification("Success", "Your song has been downloaded");
     setDownloading(false);
     setDownloaded(true);
+    triggerNotification("Downloaded", name + " has been downloaded");
   };
-
+  const loadQuality = async () => {
+    try {
+      const value = await AsyncStorage.getItem("quality");
+      if (value !== null) {
+        setQuality(value);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <TouchableOpacity>
-      <ListItem id={id}
-      style={{
-        paddingHorizontal: 10,
-        paddingVertical: 2,
-      }}
+      <ListItem
+        style={{
+          paddingHorizontal: 10,
+          paddingVertical: 2,
+        }}
       >
         <Image
-          style={{
-            width: 50,
-            height: 50,
-          }}
           source={{ uri: cover }}
+          style={{ width: 50, height: 50, alignSelf: "center" }}
         />
         <ListItem.Content>
-          <ListItem.Title style={{ fontWeight: "800" }}>{title}</ListItem.Title>
-          <ListItem.Subtitle style={{ color: "grey" }}>
-            {artists}
+          <ListItem.Title style={{ fontWeight: "800" }}>{name}</ListItem.Title>
+          <ListItem.Subtitle
+            style={{
+              color: "grey",
+            }}
+          >
+            {primaryArtists}
           </ListItem.Subtitle>
         </ListItem.Content>
         <TouchableOpacity
@@ -67,7 +62,14 @@ const SongItem = ({ id, cover, title, artists }) => {
             alignItems: "center",
           }}
           onPress={() => {
-            downloadTrack(id, title);
+            loadQuality();
+            if (quality === "320kbps") {
+              download(downloadUrl[4].link);
+            } else if (quality === "160kbps") {
+              download(downloadUrl[3].link);
+            } else if (quality === "96kbps") {
+              download(downloadUrl[2].link);
+            }
           }}
         >
           {downloading ? (
@@ -83,4 +85,4 @@ const SongItem = ({ id, cover, title, artists }) => {
   );
 };
 
-export default SongItem;
+export default KeywordItem;

@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import * as Clipboard from "expo-clipboard";
 
-const History = ({navigation}) => {
+const History = ({ navigation }) => {
   const [searches, setSearches] = useState([]);
   async function loadAndDisplayRecentSearches() {
     try {
@@ -20,6 +20,25 @@ const History = ({navigation}) => {
   const copyToClipboard = async (text) => {
     await Clipboard.setStringAsync(text);
     Alert.alert("Copied to Clipboard!", text);
+  };
+  const clearStorage = async () => {
+    try {
+      Alert.alert("Warning", "Are you sure you want to clear history?", [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: async () => {
+            await AsyncStorage.removeItem("recentSearches");
+            setSearches([]);
+          },
+        },
+      ]);
+    } catch (error) {
+      Alert.alert("Error", error.message || "Something went wrong");
+    }
   };
   loadAndDisplayRecentSearches();
   return (
@@ -59,7 +78,7 @@ const History = ({navigation}) => {
           }}
         >
           {searches.length > 0 && (
-            <TouchableOpacity onPress={() => AsyncStorage.clear()}>
+            <TouchableOpacity onPress={clearStorage}>
               <View
                 style={{
                   flexDirection: "row",

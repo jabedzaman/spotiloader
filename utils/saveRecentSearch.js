@@ -9,7 +9,6 @@ async function saveRecentSearch(searchTerm) {
       }
       searches.unshift(searchTerm);
       await AsyncStorage.setItem("recentSearches", JSON.stringify(searches));
-      console.log("Search term saved");
     } catch (error) {
       console.error(error);
     }

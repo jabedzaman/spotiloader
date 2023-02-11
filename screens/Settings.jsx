@@ -1,10 +1,4 @@
-import {
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  Share,
-  Linking,
-} from "react-native";
+import { View, TouchableOpacity, Share, Linking } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Button, Icon, ListItem, Overlay, Text } from "react-native-elements";
@@ -12,6 +6,7 @@ import config from "../config/app.config";
 import { StatusBar } from "expo-status-bar";
 import { Picker } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Info = () => {
   const [visible, setVisible] = useState(false);
@@ -45,14 +40,6 @@ const Info = () => {
   return (
     <SafeAreaView>
       <StatusBar style="dark" />
-      {Platform.OS === "android" && (
-        <View
-          style={{
-            marginVertical: 25,
-          }}
-        />
-      )}
-
       <View
         style={{
           paddingHorizontal: 20,
