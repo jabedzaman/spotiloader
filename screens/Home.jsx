@@ -12,6 +12,7 @@ import YoutubeItem from "./components/YoutubeItem";
 import SpotifyTrack from "./components/SpotifyTrack";
 import saveRecentSearch from "../utils/saveRecentSearch";
 import * as Network from "expo-network";
+import Hero from "./components/Hero";
 
 const Home = () => {
   const [input, setInput] = useState("");
@@ -203,6 +204,11 @@ const Home = () => {
             <ActivityIndicator size="large" color="green" />
           </View>
         </View>
+        {!tracklist.length &&
+          !searchItem.length &&
+          !ytSearchItem.title &&
+          !spotifyTrack.title &&
+          !input && <Hero />}
         {!networkStatus && (
           <Overlay
             onBackdropPress={() => {
@@ -222,7 +228,7 @@ const Home = () => {
               No Internet Connection
             </Text>
             <Button
-              title="Retry" 
+              title="Retry"
               onPress={() => {
                 getNetworkStatus();
               }}
