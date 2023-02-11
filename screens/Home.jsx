@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { Button, SearchBar, Text } from "react-native-elements";
+import { Button, Icon, Overlay, SearchBar, Text } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "./components/Header";
 import axios from "axios";
@@ -11,15 +11,22 @@ import KeywordItem from "./components/KeywordItem";
 import YoutubeItem from "./components/YoutubeItem";
 import SpotifyTrack from "./components/SpotifyTrack";
 import saveRecentSearch from "../utils/saveRecentSearch";
+import * as Network from "expo-network";
 
 const Home = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [networkStatus, setNetworkStatus] = useState(true);
   const [tracklist, setTracklist] = useState([]);
   const [searchItem, setSearchItem] = useState([]);
   const [ytSearchItem, setYtSearchItem] = useState([]);
   const [spotifyTrack, setSpotifyTrack] = useState([]);
   const [spotifyTrackdownloadurl, setSpotifyTrackdownloadurl] = useState([]);
+
+  const getNetworkStatus = async () => {
+    const networkState = await Network.getNetworkStateAsync();
+    setNetworkStatus(networkState.isInternetReachable);
+  };
 
   const getSpotifyPlaylist = async () => {
     setLoading(true);
@@ -133,6 +140,7 @@ const Home = () => {
             setInput(text);
           }}
           onSubmitEditing={() => {
+            getNetworkStatus();
             if (input.includes("open.spotify.com/track/")) {
               saveRecentSearch(input);
               getSpotifyTrack();
@@ -195,6 +203,32 @@ const Home = () => {
             <ActivityIndicator size="large" color="green" />
           </View>
         </View>
+        {!networkStatus && (
+          <Overlay
+            onBackdropPress={() => {
+              setNetworkStatus(true);
+            }}
+          >
+            <Icon name="wifi" size={100} color="gray" />
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                marginTop: 10,
+                marginHorizontal: 20,
+                marginBottom: 20,
+              }}
+            >
+              No Internet Connection
+            </Text>
+            <Button
+              title="Retry" 
+              onPress={() => {
+                getNetworkStatus();
+              }}
+            />
+          </Overlay>
+        )}
         <View style={{ height: 100 }} />
       </ScrollView>
     </SafeAreaView>
