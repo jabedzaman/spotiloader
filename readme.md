@@ -38,7 +38,7 @@ Even Keyword search is supported, just search for the song you want to download 
 - [ ] Add Dark Mode [#1](https://github.com/jabedzaman/spotiloader/issues/1)
 - [x] Add search history
 - [ ] Add downlaod with meta data
-- [ ] Write Tests
+- [x] Write Tests
 
 ### Want to Contribute 🙋‍♂️?
 COOL!! Your contributions will help make SpotiLoader more accessible to users around the world. Join in spreading the power of music globally!
