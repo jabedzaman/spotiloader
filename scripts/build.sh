@@ -1,23 +1,21 @@
 #!/bin/bash
 
-#  check if version is same in package.json and app.config.js
+#  check if version is same in package.json and app.config.js and app.json
 
 cd ..
 packageversion=$( cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
 cd config
 configversion=$( cat app.config.js| grep version | head -1 | awk -F\" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
 cd ..
-if [ "$packageversion" != "$configversion" ]; then
-    echo "version mismatch"
-    echo "package.json version: $packageversion"
-    echo "app.config.js version: $configversion"
-    echo "please update app.config.js version"
+appversion=$( cat app.json | grep version | head -1 | awk -F\" '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
+if [ "$packageversion" != "$configversion" ] || [ "$packageversion" != "$appversion" ]; then
+    echo "version in package.json and app.config.js and app.json is not same"
+    echo "please make sure version in package.json and app.config.js and app.json is same"
     exit 0
 fi
-
 #  check if version is satisfied
 
-echo "Are you sure you want to build version $packageversion (n/Y)?"
+echo "Are you sure you want to build version $appversion (n/Y)?"
 read build
 if [ "$build" == "n" ] || [ "$build" == "N" ] || [ "$build" == "no" ] || [ "$build" == "No" ] || [ "$build" == "NO" ]; then
     echo "build cancelled"
