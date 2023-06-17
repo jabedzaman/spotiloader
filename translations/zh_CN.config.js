@@ -14,10 +14,10 @@ const warning_ok = "确定";
 
 //  settings screen
 
-const settings = "设置";
-const language = "需要";
+const 设置 = "设置";
+const 编程语言 = "需要";
 const theme = "主题";
-const about = "关于";
+const 关于 = "关于";
 const share_with_friends = "分享给朋友";
 const report_a_bug = "反馈BUG";
 const feedback_and_suggestions = "反馈和建议";
@@ -43,10 +43,10 @@ const en = {
   warning,
   warning_message,
   warning_ok,
-  settings,
-  language,
+  设置,
+  编程语言,
   theme,
-  about,
+  关于,
   share_with_friends,
   report_a_bug,
   feedback_and_suggestions,
@@ -57,4 +57,4 @@ const en = {
   about_message,
 };
 
-export default en;
+export 默认 zh_CN;
