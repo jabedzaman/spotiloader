@@ -15,7 +15,7 @@ const warning_ok = "确定";
 //  settings screen
 
 const settings = "设置";
-const language = "需要";
+const language = "语言";
 const theme = "主题";
 const about = "关于";
 const share_with_friends = "分享给朋友";
