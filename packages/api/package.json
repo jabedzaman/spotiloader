@@ -11,5 +11,10 @@
     "build": "tsc && resolve-tspaths",
     "start": "node dist/index.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/index.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "envalid": "^8.0.0",
+    "spotifydl-core": "^0.2.0"
   }
 }

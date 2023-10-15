@@ -25,6 +25,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@types/node": "^20.8.6"
+    "@types/node": "^20.8.6",
+    "winston": "^3.11.0"
   }
 }
