@@ -5,6 +5,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { config } from "~/config";
 import { router } from "~/routes";
+import { protect } from "~/utils/middleware";
 
 export const app: Express = express();
 
@@ -39,10 +40,8 @@ app.set("url", config.APP_URL);
 app.set("trust proxy", true);
 app.set("json spaces", 2);
 
-app.use('/api/v1', router);
-app.use('*', (req, res) => {
-    res.status(404).json({
-        error: 404,
-        message: "Not Found",
-    });
-});
+app.use('/api/v1', protect, router);
+app.use((_, res) => {
+    res.status(404).json({ message: "Not Found" });
+})
+

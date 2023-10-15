@@ -15,4 +15,5 @@ export const config = cleanEnv(process.env, {
   APP_PORT: str({ default: "4000" }),
   APP_NAME: str({ default: "spotiloader-API" }),
   APP_URL: str({ default: "http://localhost:4000" }),
+  API_KEY: str(),
 });
