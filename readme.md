@@ -9,8 +9,8 @@
 
 ## TechStack
 
-<p align="center"
-<img align="center" width="100" height="100" src="https://brandeps.com/icon-download/E/Expo-icon-vector-01.svg"/>
+<p align="center">
+<img align="center" width="100" height="100" src="https://brandeps.com/icon-download/E/Expo-icon-vector-01.svg" />
 <img align="center" width="100" height="100" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"/>
 <img align="center" width="100" height="100" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg"/>
 <img align="center" width="100" height="100" src="https://brandeps.com/icon-download/N/Nodejs-icon-vector-02.svg"/>

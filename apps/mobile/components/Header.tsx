@@ -4,29 +4,28 @@ import {
   StyleSheet,
   useColorScheme,
   Pressable,
-  Button,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { usePathname, useRouter } from "expo-router";
+import * as React from "react";
 
 export default function Header() {
   const colorScheme = useColorScheme();
   const router = useRouter();
   const pathname = usePathname();
-  const getTitle = () => {
-    switch (pathname) {
-      case "/":
-        return "spotiloader";
-      case "/downloads":
-        return "downloads";
-      case "/search":
-        return "search";
-      case pathname.split("/")[2]:
-        return "seached for " + pathname.split("/")[2];
-      default:
-        return "Home";
-    }
-  };
+  let title: string;
+  if (pathname === "/") {
+    title = "Spotiloader";
+  } else if (pathname.startsWith("/search")) {
+    title = "Search";
+  } else if (pathname.startsWith("/settings")) {
+    title = "Settings";
+  } else if (pathname.startsWith("/downloads")) {
+    title = "Downloads";
+  } else {
+    title = "Spotiloader";
+  }
+
   return (
     <View
       style={
@@ -46,7 +45,7 @@ export default function Header() {
           colorScheme === "light" ? stylesLight.heading : stylesDark.heading
         }
       >
-        {getTitle()}
+        {title}
       </Text>
 
       <Pressable

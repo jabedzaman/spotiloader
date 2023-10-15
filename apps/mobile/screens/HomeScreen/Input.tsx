@@ -8,7 +8,6 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import * as Clipboard from "expo-clipboard";
-import { stringtoUrl } from "../../utils/convertor";
 
 export default function Input() {
   const colorScheme = useColorScheme();
@@ -97,6 +96,7 @@ const stylesDark = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
+    fontSize: 16,
   },
   inputText: {
     color: "#FFFFFF",
