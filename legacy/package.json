@@ -1,5 +1,5 @@
 {
-  "name": "spotiloader",
+  "name": "@spotiloader/legacy",
   "version": "1.0.3",
   "description": "Multiplatform Music Downloader",
   "author": {
