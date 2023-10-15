@@ -11,11 +11,11 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "concurrently -p \"[{name}]\" -n \"Node,Expo\" -c \"yellow.bold,cyan.bold\" \"yarn start:api\" \"yarn start:expo\"",
+    "start": "concurrently -p \"[{name}]\" -n \"Node,Expo\" -c \"yellow.bold,cyan.bold\" \"yarn start:api:prod\" \"yarn start:expo\"",
     "start:expo": "yarn workspace @spotiloader/mobile start",
-    "start:api": "yarn workspace @spotiloader/api start",
+    "start:api:prod": "NODE_ENV=production yarn workspace @spotiloader/api start",
     "build:api": "yarn workspace @spotiloader/api build",
-    "dev:api": "yarn workspace @spotiloader/api dev"
+    "start:api": "yarn workspace @spotiloader/api dev"
   },
   "devDependencies": {
     "concurrently": "^8.2.1",
