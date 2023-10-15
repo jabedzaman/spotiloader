@@ -23,6 +23,7 @@
         "backgroundColor": "#ffffff"
       }
     },
+    "scheme": "dev.jabed.spotiloader",
     "web": {
       "favicon": "./assets/favicon.png"
     }
