@@ -1,13 +1,30 @@
 import * as React from "react";
-import { SplashScreen, Stack } from "expo-router";
+import { Slot, SplashScreen } from "expo-router";
 
-import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
+import {
+  useFonts,
+  Nunito_400Regular,
+  Nunito_400Regular_Italic,
+  Nunito_600SemiBold,
+  Nunito_600SemiBold_Italic,
+  Nunito_700Bold,
+  Nunito_700Bold_Italic,
+} from "@expo-google-fonts/nunito";
+import { SafeAreaView } from "react-native-safe-area-context";
+import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
+import Header from "../components/Header";
+import { View } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
   const [fontsLoaded, fontError] = useFonts({
-    Poppins_400Regular,
+    Nunito_400Regular,
+    Nunito_400Regular_Italic,
+    Nunito_600SemiBold,
+    Nunito_600SemiBold_Italic,
+    Nunito_700Bold,
+    Nunito_700Bold_Italic,
   });
 
   React.useEffect(() => {
@@ -19,15 +36,11 @@ export default function Layout() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
-
   return (
-    <Stack>
-      <Stack.Screen
-        name="index"
-        options={{
-            headerShown: false,
-        }}
-      />
-    </Stack>
+    <SafeAreaView>
+      <ExpoStatusBar style="light" backgroundColor="#121113" />
+      <Header />
+      <Slot />
+    </SafeAreaView>
   );
 }
