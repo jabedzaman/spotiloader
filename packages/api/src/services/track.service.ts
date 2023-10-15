@@ -9,4 +9,9 @@ export class trackService {
         const track = await spotifyClient.getTrack(this.uri);
         return track;
     }
+
+    public async getTrackById() {
+        const track = await spotifyClient.getTrack(this.uri);
+        return track;
+    }
 }
