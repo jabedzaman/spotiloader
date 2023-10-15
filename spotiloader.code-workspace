@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "name": "spotiloader",
+      "path": "."
+    },
+    {
+      "name": "mobile",
+      "path": "apps/mobile"
+    },
+    {
+      "name": "api",
+      "path": "packages/api"
+    }
+  ],
+  "settings": {}
+}

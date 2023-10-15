@@ -162,3 +162,6 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Turbo Repo
+.turbo
