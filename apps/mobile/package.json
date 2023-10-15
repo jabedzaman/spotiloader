@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.23.2",
+    "@expo-google-fonts/poppins": "^0.2.3",
     "@types/react": "~18.2.14",
     "expo": "~49.0.13",
     "expo-constants": "^14.4.2",
+    "expo-font": "^11.6.0",
     "expo-linking": "^6.0.0",
     "expo-router": "^2.0.9",
     "expo-status-bar": "^1.7.1",
