@@ -1,0 +1,22 @@
+{
+  "name": "spotiloader",
+  "version": "2.0.0",
+  "description": "Multiplatform music downloader and player",
+  "repository": "git@github.com:jabedzaman/spotiloader.git",
+  "author": "jabedzaman <hi@jabed.dev>",
+  "license": "Apache-2.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "start:prod": "turbo start",
+    "start:dev": "turbo dev",
+    "test": "turbo test",
+    "lint": "turbo lint"
+  },
+  "devDependencies": {
+    "resolve-tspaths": "^0.8.16",
+    "tsconfig-paths": "^4.2.0",
+    "turbo": "^1.10.15",
+    "typescript": "^5.2.2"
+  }
+}
