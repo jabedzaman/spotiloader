@@ -39,4 +39,10 @@ app.set("url", config.APP_URL);
 app.set("trust proxy", true);
 app.set("json spaces", 2);
 
-app.use('/', router);
+app.use('/api/v1', router);
+app.use('*', (req, res) => {
+    res.status(404).json({
+        error: 404,
+        message: "Not Found",
+    });
+});
