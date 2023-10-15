@@ -1,7 +1,7 @@
 import spotifyClient from "~/helpers/spotifyClient";
 
 export class trackService {
-    public uri: string;
+    private uri: string;
     constructor(uri: string) {
         this.uri = uri;
     }
