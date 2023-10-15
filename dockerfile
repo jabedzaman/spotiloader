@@ -14,7 +14,7 @@ ENV API_KEY=$API_KEY
 ENV APP_PORT=$APP_PORT
 
 COPY package*.json yarn.lock tsconfig.json ./
-RUN mkdir ./packages/api
+RUN mkdir -p ./packages/api
 COPY packages/api/package*.json tsconfig.json ./packages/api/
 
 RUN yarn
