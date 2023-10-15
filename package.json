@@ -15,7 +15,9 @@
     "start:expo": "yarn workspace @spotiloader/mobile start",
     "start:api:prod": "NODE_ENV=production yarn workspace @spotiloader/api start",
     "build:api": "yarn workspace @spotiloader/api build",
-    "start:api": "yarn workspace @spotiloader/api dev"
+    "start:api": "yarn workspace @spotiloader/api dev",
+    "docker:build": "docker build -t jabedzaman/spotiloader .",
+    "docker:run": "docker run -p 3000:3000 -d jabedzaman/spotiloader"
   },
   "devDependencies": {
     "concurrently": "^8.2.1",
