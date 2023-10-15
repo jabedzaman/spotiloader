@@ -8,8 +8,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "start:prod": "turbo start",
-    "start:dev": "turbo dev",
+    "start": "turbo start",
     "test": "turbo test",
     "lint": "turbo lint"
   },
