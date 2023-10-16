@@ -13,7 +13,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 import Header from "../components/Header";
-import { View } from "react-native";
+import { TrackProvider } from "../contexts/trackContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -39,8 +39,10 @@ export default function Layout() {
   return (
     <SafeAreaView>
       <ExpoStatusBar style="light" backgroundColor="#121113" />
-      <Header />
-      <Slot />
+      <TrackProvider>
+        <Header />
+        <Slot />
+      </TrackProvider>
     </SafeAreaView>
   );
 }
