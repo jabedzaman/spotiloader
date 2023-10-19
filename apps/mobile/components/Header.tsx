@@ -50,12 +50,11 @@ export default function Header() {
 
       <Pressable
         onPress={() => {
-          console.log("pressed settings");
           router.push("/downloads");
         }}
       >
         <Ionicons
-          name="download-outline"
+          name="library-outline"
           style={
             colorScheme === "light"
               ? stylesLight.settingsMenu

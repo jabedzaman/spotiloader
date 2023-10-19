@@ -2,8 +2,8 @@ import {
   View,
   useColorScheme,
   StyleSheet,
-  Text,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -25,10 +25,7 @@ export default function Input() {
             : stylesDark.inputContainer
         }
       >
-        <TouchableOpacity
-          onPress={() => {
-            router.push("/search");
-          }}
+        <View
           style={colorScheme === "light" ? stylesLight.input : stylesDark.input}
         >
           <Ionicons
@@ -37,20 +34,27 @@ export default function Input() {
               colorScheme === "light" ? stylesLight.icons : stylesDark.icons
             }
           />
-          <Text
+          <TextInput
             style={
               colorScheme === "light"
                 ? stylesLight.inputText
                 : stylesDark.inputText
             }
-          >
-            Enter a Track, Album, or Playlist URL ...
-          </Text>
-        </TouchableOpacity>
+            onSubmitEditing={(e) => {
+              router.push({
+                pathname: "/search/[query]",
+                params: {
+                  query: e.nativeEvent.text,
+                },
+              });
+            }}
+            placeholder="Search for track.."
+            placeholderTextColor="#AAAAAA"
+          />
+        </View>
         <TouchableOpacity
           onPress={async () => {
             const url = await Clipboard.getStringAsync();
-            console.log(url);
             router.push({
               pathname: "/search/[query]",
               params: {

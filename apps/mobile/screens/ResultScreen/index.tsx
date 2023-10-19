@@ -2,16 +2,18 @@ import { Text, View, StyleSheet, useColorScheme, Image } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { stringtoUrl } from "../../utils/convertor";
 import { useTracks } from "../../contexts/trackContext";
+import Item from "../../components/Item";
 import * as React from "react";
 
 export default function Index() {
   const colorScheme = useColorScheme();
   const params = useLocalSearchParams();
-  console.log(params.query);
-  const { searchTrack, tracks } = useTracks();
+  const { searchTrack, isLoading, isError, track } = useTracks();
+  console.log("tracks at search", track);
   React.useEffect(() => {
     // @ts-ignore
-    searchTrack(stringtoUrl(params.query));
+    const uri = stringtoUrl(params.query);
+    searchTrack(uri);
   }, [params.query]);
   return (
     <View
@@ -19,16 +21,18 @@ export default function Index() {
         colorScheme === "light" ? stylesLight.container : stylesDark.container
       }
     >
-      <View>
-        <Image
-          source={{
-            uri: tracks[0].metadata.cover_url,
-          }}
-          width={200}
-          height={200}
+      {isLoading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <Item
+          isDownloaded={track?.isDownloaded}
+          downloading={track?.downloading}
+          downloadProgress={track?.downloadProgress}
+          metadata={track?.metadata}
+          url={track?.url}
+          lastSearched={track?.lastSearched}
         />
-        <Text>{tracks[0].metadata.name}</Text>
-      </View>
+      )}
     </View>
   );
 }

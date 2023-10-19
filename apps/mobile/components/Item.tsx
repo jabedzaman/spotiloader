@@ -1,18 +1,10 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { ITrack } from "../contexts/trackContext";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
 
-export default function Item(track: ITrack) {
-  const router = useRouter();
+export default function Item(track:ITrack) {
   return (
-    <TouchableOpacity
-      onPress={() => {
-        router.push({
-          pathname: "/search",
-        });
-      }}
-    >
+    <TouchableOpacity>
       <View style={styles.container}>
         <Image
           source={{ uri: track.metadata.cover_url }}
@@ -28,12 +20,28 @@ export default function Item(track: ITrack) {
             {track.metadata.artists.map((artist: string) => artist).join(", ")}
           </Text>
         </View>
-        <Ionicons
-          name="add"
-          style={styles.deleteButton}
-          size={24}
-          color="#fff"
-        />
+        {track.isDownloaded ? (
+          <Ionicons
+            name="download-outline"
+            style={styles.downloadButton}
+            size={24}
+            color="#fff"
+          />
+        ) : track.downloading ? (
+          <Ionicons
+            name="ios-checkmark-circle-outline"
+            style={styles.downloadButton}
+            size={24}
+            color="#fff"
+          />
+        ) : (
+          <Ionicons
+            name="download-outline"
+            style={styles.downloadButton}
+            size={24}
+            color="#fff"
+          />
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -57,10 +65,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#484848",
   },
-  deleteButton: {
+  downloadButton: {
     marginLeft: "auto",
     alignSelf: "center",
-    transform: [{ rotate: "45deg" }],
     fontSize: 24,
   },
 });

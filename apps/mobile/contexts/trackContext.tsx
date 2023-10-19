@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as SecureStore from "expo-secure-store";
 import { axiosInstance } from "../utils/axiosInstance";
 
 export interface ITrack {
@@ -13,16 +12,26 @@ export interface ITrack {
   };
   isDownloaded: boolean;
   lastSearched: Date;
+  downloadProgress: number;
+  downloading: boolean;
 }
 
 interface ITrackContext {
-  tracks: ITrack[];
+  track: ITrack | null;
+  isLoading: boolean;
+  error: string | null;
+  isError: boolean;
   searchTrack: (url: string) => void;
+  downloadTrack: () => void;
 }
 
 const TrackContext = React.createContext<ITrackContext>({
-  tracks: [],
+  track: null,
+  isLoading: false,
+  error: null,
+  isError: false,
   searchTrack: () => {},
+  downloadTrack: () => {},
 });
 
 export function useTracks() {
@@ -34,57 +43,53 @@ export function useTracks() {
 }
 
 export function TrackProvider({ children }: { children: React.ReactNode }) {
-  const [tracks, setTracks] = React.useState<ITrack[]>([]);
+  const [track, setTrack] = React.useState<ITrack>(null);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<string | null>(null);
+  const [progress, setProgress] = React.useState<number>(0);
+  const [downloading, setDownloading] = React.useState<boolean>(false);
+  const [isDownloaded, setIsDownloaded] = React.useState<boolean>(false);
 
-  const searchTrack = async (url: string) => {
+  const searchTrack = async (url: string): Promise<ITrack | undefined> => {
     try {
-      console.log(axiosInstance.defaults.headers["x-api-key"]);
-      console.log(axiosInstance.defaults.baseURL);
-      console.log(url);
+      setIsLoading(true);
       const { data } = await axiosInstance.get(`/track?uri=${url}`);
-      setTracks((prev) => [
-        {
-          url,
-          metadata: data,
-          isDownloaded: false,
-          lastSearched: new Date(),
+      console.log("data at contect", data);
+      setTrack({
+        url: url,
+        metadata: {
+          album_name: data.album_name,
+          artists: data.artists,
+          cover_url: data.cover_url,
+          name: data.name,
+          release_date: data.release_date,
         },
-        ...prev,
-      ]);
-      await SecureStore.setItemAsync(
-        "tracks",
-        JSON.stringify([
-          {
-            url,
-            metadata: data,
-            isDownloaded: false,
-            lastSearched: new Date(),
-          },
-          ...tracks,
-        ])
-      );
+        isDownloaded,
+        lastSearched: new Date(),
+        downloadProgress: progress,
+        downloading,
+      });
+      setIsLoading(false);
+      return data;
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
+      setError(error.message);
+      return undefined;
     }
   };
-  React.useEffect(() => {
-    const getTracks = async () => {
-      try {
-        const tracks = await SecureStore.getItemAsync("tracks");
-        if (tracks) {
-          setTracks(JSON.parse(tracks));
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getTracks();
-  }, []);
+  const downloadTrack = async () => {
+    
+  };
   return (
     <TrackContext.Provider
       value={{
         searchTrack,
-        tracks,
+        downloadTrack,
+        track,
+        isLoading,
+        error,
+        isError: !!error,
       }}
     >
       {children}
