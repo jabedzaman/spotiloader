@@ -5,7 +5,7 @@
 </div>
 
 > [!WARNING]  
-> Being Rewritten, old releases wont work due to outdated API
+> will do rewrite soon
 
 ## TechStack
 
