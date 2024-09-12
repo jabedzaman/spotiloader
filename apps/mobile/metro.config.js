@@ -1,24 +1,19 @@
-const { getDefaultConfig } = require('@expo/metro-config')
-const path = require('path')
+const { getDefaultConfig } = require("expo/metro-config");
+const path = require("path");
 
-const projectRoot = __dirname
-const workspaceRoot = path.resolve(__dirname, '../..')
+// Find the project and workspace directories
+const projectRoot = __dirname;
+// This can be replaced with `find-yarn-workspace-root`
+const monorepoRoot = path.resolve(projectRoot, "../..");
 
-/** @type {import('expo/metro-config').MetroConfig} */
-const config = getDefaultConfig(projectRoot, {
-  isCSSEnabled: true
-})
+const config = getDefaultConfig(projectRoot);
 
-config.resolver.sourceExts.push("cjs");
-
-config.watchFolders = [workspaceRoot]
+// 1. Watch all files within the monorepo
+config.watchFolders = [monorepoRoot];
+// 2. Let Metro know where to resolve packages and in what order
 config.resolver.nodeModulesPaths = [
-  path.resolve(projectRoot, 'node_modules'),
-  path.resolve(workspaceRoot, 'node_modules'),
-]
-config.resolver.disableHierarchicalLookup = true;
+  path.resolve(projectRoot, "node_modules"),
+  path.resolve(monorepoRoot, "node_modules"),
+];
 
-config.transformer = { ...config.transformer, unstable_allowRequireContext: true }
-config.transformer.minifierPath = require.resolve('metro-minify-terser')
-
-module.exports = config
+module.exports = config;

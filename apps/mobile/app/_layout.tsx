@@ -1,48 +1,37 @@
-import * as React from "react";
-import { Slot, SplashScreen } from "expo-router";
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
+import 'react-native-reanimated';
 
-import {
-  useFonts,
-  Nunito_400Regular,
-  Nunito_400Regular_Italic,
-  Nunito_600SemiBold,
-  Nunito_600SemiBold_Italic,
-  Nunito_700Bold,
-  Nunito_700Bold_Italic,
-} from "@expo-google-fonts/nunito";
-import { SafeAreaView } from "react-native-safe-area-context";
-import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
-import Header from "../components/Header";
-import { TrackProvider } from "../contexts/trackContext";
+import { useColorScheme } from '@/hooks/useColorScheme';
 
+// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export default function Layout() {
-  const [fontsLoaded, fontError] = useFonts({
-    Nunito_400Regular,
-    Nunito_400Regular_Italic,
-    Nunito_600SemiBold,
-    Nunito_600SemiBold_Italic,
-    Nunito_700Bold,
-    Nunito_700Bold_Italic,
+export default function RootLayout() {
+  const colorScheme = useColorScheme();
+  const [loaded] = useFonts({
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
-  React.useEffect(() => {
-    if (fontsLoaded || fontError) {
+  useEffect(() => {
+    if (loaded) {
       SplashScreen.hideAsync();
     }
-  }, [fontsLoaded, fontError]);
+  }, [loaded]);
 
-  if (!fontsLoaded && !fontError) {
+  if (!loaded) {
     return null;
   }
+
   return (
-    <SafeAreaView>
-      <ExpoStatusBar style="light" backgroundColor="#121113" />
-      <TrackProvider>
-        <Header />
-        <Slot />
-      </TrackProvider>
-    </SafeAreaView>
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+    </ThemeProvider>
   );
 }

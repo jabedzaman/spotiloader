@@ -1,33 +1,20 @@
 {
   "name": "spotiloader",
   "version": "2.0.0",
-  "description": "Multiplatform music downloader and player",
+  "description": "multiplatform music downloader",
   "repository": "git@github.com:jabedzaman/spotiloader.git",
   "author": "jabedzaman <hi@jabed.dev>",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "private": true,
+  "scripts": {
+    "start:dev": "turbo start:dev",
+    "build": "turbo build",
+    "start": "turbo start",
+    "lint": "turbo lint",
+    "format": "turbo format"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"
-  ],
-  "scripts": {
-    "start": "concurrently -p \"[{name}]\" -n \"Node,Expo\" -c \"yellow.bold,cyan.bold\" \"yarn start:api:prod\" \"yarn start:expo\"",
-    "start:expo": "yarn workspace @spotiloader/mobile start",
-    "start:api:prod": "NODE_ENV=production yarn workspace @spotiloader/api start",
-    "build:api": "yarn workspace @spotiloader/api build",
-    "start:api": "yarn workspace @spotiloader/api dev",
-    "docker:build": "docker build -t jabedzaman/spotiloader .",
-    "docker:run": "docker run -p 3000:3000 -d jabedzaman/spotiloader"
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.1",
-    "resolve-tspaths": "^0.8.16",
-    "ts-node-dev": "^2.0.0",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.2.2"
-  },
-  "dependencies": {
-    "@types/node": "^20.8.6",
-    "winston": "^3.11.0"
-  }
+  ]
 }
