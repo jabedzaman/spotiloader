@@ -1,18 +1,17 @@
+import { setupSwagger } from '@/swagger';
+import { AppModule } from '@app/app.module';
 import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Response } from 'express';
-import { AppModule } from '@app/app.module';
-import { setupSwagger } from '@/swagger';
-
-export const logger = new Logger('Auth Service');
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: true,
   });
   const configService = app.get(ConfigService);
+  const app_name: string = configService.getOrThrow<string>('app.name');
   const port: number = configService.getOrThrow<number>('app.http.port');
   const host: string = configService.getOrThrow<string>('app.http.host');
   const globalPrefix: string =
@@ -26,6 +25,7 @@ async function bootstrap() {
   const versionEnable: string = configService.getOrThrow<string>(
     'app.versioning.enable',
   );
+  const logger = new Logger(app_name);
   app.getHttpAdapter().getInstance().set('json spaces', 4);
   app.useGlobalPipes(
     new ValidationPipe({

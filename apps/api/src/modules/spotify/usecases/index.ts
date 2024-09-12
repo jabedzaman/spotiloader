@@ -1,4 +1,5 @@
+import { Download } from './download';
 import { Playlist } from './playlist';
 import { Track } from './track';
 
-export const USE_CASES = [Track, Playlist];
+export const USE_CASES = [Track, Playlist, Download];
