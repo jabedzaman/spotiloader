@@ -1,6 +1,16 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, VERSION_NEUTRAL } from '@nestjs/common';
+import { HealthCheck, HealthCheckService } from '@nestjs/terminus';
 
-@Controller()
+@Controller({
+  path: '/',
+  version: VERSION_NEUTRAL,
+})
 export class AppController {
-  constructor() {}
+  constructor(private readonly healthCheckService: HealthCheckService) {}
+
+  @HealthCheck()
+  @Get('/health')
+  check() {
+    return this.healthCheckService.check([]);
+  }
 }
