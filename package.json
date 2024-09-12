@@ -13,8 +13,12 @@
     "lint": "turbo lint",
     "format": "turbo format"
   },
+  "packageManager": "yarn@1.22.22",
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "turbo": "^2.1.1"
+  }
 }
