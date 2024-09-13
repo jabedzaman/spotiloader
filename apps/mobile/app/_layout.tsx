@@ -31,22 +31,22 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
+      <Stack
+        screenOptions={{
+          headerTitle() {
+            return <></>;
+          },
+          headerBackTitle: "Back",
+        }}
+      >
         <Stack.Screen
           name="index"
           options={{
             headerShown: false,
           }}
         />
-        <Stack.Screen
-          name="+not-found"
-          options={{
-            headerTitle() {
-              return <></>;
-            },
-            headerBackTitle: "Back",
-          }}
-        />
+        <Stack.Screen name="query" />
+        <Stack.Screen name="+not-found" />
       </Stack>
     </ThemeProvider>
   );
