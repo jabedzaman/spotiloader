@@ -1,0 +1,34 @@
+{
+  "name": "@spotiloader/types",
+  "version": "3.0.0",
+  "description": "spotify, apple music, yt music, etc music downloader",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jabedzaman/spotiloader.git",
+    "directory": "packages/types"
+  },
+  "author": "jabedzaman <hi@jabed.dev> (https://jabed.dev/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jabedzaman/spotiloader/issues"
+  },
+  "homepage": "https://github.com/jabedzaman/spotiloader#readme",
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "dotenv": "^16.5.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "mongoose": "^8.15.1"
+  }
+}

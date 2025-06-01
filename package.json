@@ -8,7 +8,8 @@
   },
   "scripts": {
     "watch": "pnpm --filter './apps/**' run watch",
-    "build": "pnpm --filter './apps/**' run build",
+    "build": "pnpm --filter './**' run build",
+    "build:packages": "pnpm --filter './packages/**' run build",
     "start": "pnpm --filter './apps/**' run start"
   },
   "author": "jabedzaman <hi@jabed.dev> (https://jabed.dev/)",
