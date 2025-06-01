@@ -1,0 +1,56 @@
+{
+  "name": "@spotiloader/web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "spotify, apple music, yt music, etc music downloader",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jabedzaman/spotiloader.git",
+    "directory": "apps/web"
+  },
+  "author": "jabedzaman <hi@jabed.dev> (https://jabed.dev/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jabedzaman/spotiloader/issues"
+  },
+  "homepage": "https://github.com/jabedzaman/spotiloader#readme",
+  "scripts": {
+    "watch": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@spotiloader/types": "workspace:^",
+    "axios": "^1.9.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.511.0",
+    "moment": "^2.30.1",
+    "mongoose": "^8.15.1",
+    "next": "15.3.2",
+    "next-themes": "^0.4.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.4",
+    "sonner": "^2.0.3",
+    "swr": "^2.3.3",
+    "tailwind-merge": "^3.3.0",
+    "zod": "^3.25.33"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.2",
+    "tailwindcss": "^4",
+    "tw-animate-css": "^1.3.0",
+    "typescript": "^5"
+  }
+}
