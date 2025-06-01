@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "NodeNext",
+    "baseUrl": "./",
+    "paths": { "~/*": ["./src/*"], "@spotiloader/prisma": ["./generated/prisma"] },
+    "typeRoots": ["./src/types"],
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "jsx": "react"
+  }
+}
