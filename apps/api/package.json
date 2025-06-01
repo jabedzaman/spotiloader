@@ -28,6 +28,8 @@
     },
     "dependencies": {
         "@distube/ytdl-core": "^4.16.10",
+        "@spotiloader/models": "workspace:*",
+        "@spotiloader/types": "workspace:*",
         "bullmq": "^5.53.0",
         "cors": "^2.8.5",
         "dotenv": "^16.5.0",

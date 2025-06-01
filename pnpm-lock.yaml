@@ -13,6 +13,12 @@ importers:
       '@distube/ytdl-core':
         specifier: ^4.16.10
         version: 4.16.10
+      '@spotiloader/models':
+        specifier: workspace:*
+        version: link:../../packages/models
+      '@spotiloader/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       bullmq:
         specifier: ^5.53.0
         version: 5.53.1
