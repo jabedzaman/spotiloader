@@ -1,0 +1,21 @@
+{
+  "name": "spotiloader",
+  "version": "3.0.0",
+  "description": "spotify, apple music, yt music, etc music downloader",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jabedzaman/spotiloader.git"
+  },
+  "scripts": {
+    "watch": "pnpm --filter './apps/**' run watch",
+    "build": "pnpm --filter './apps/**' run build",
+    "start": "pnpm --filter './apps/**' run start"
+  },
+  "author": "jabedzaman <hi@jabed.dev> (https://jabed.dev/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jabedzaman/spotiloader/issues"
+  },
+  "homepage": "https://github.com/jabedzaman/spotiloader#readme",
+  "packageManager": "pnpm@9.14.2"
+}
