@@ -19,7 +19,10 @@ export const configSchema = z.object({
   // === Database Configuration ===
   MONGO_URI: z.coerce
     .string()
-    .startsWith("mongodb://")
+    .refine(
+      (val) => val.startsWith("mongodb://") || val.startsWith("mongodb+srv://"),
+      { message: "Invalid MongoDB URI" }
+    )
     .default("mongodb://localhost:27017"),
 });
 

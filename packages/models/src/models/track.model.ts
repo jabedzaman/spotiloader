@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { ITrackDoc } from "@spotiloader/types";
 import { CONSTS } from "../CONSTS";
+import { toJson } from "~/plugins";
 
 /**
  * Track Schema
@@ -14,7 +15,7 @@ const trackSchema = new Schema<ITrackDoc>(
     trackId: { type: String }, // optional track ID
     title: { type: String, required: true }, // title of the track
     duration: { type: Number }, // duration of the track in seconds
-    year: { type: Number }, // year of release
+    year: { type: String }, // year of release
     meta: { type: Map }, // metadata for the track
 
     covers: [{ type: Schema.Types.ObjectId, ref: CONSTS.COLLECTIONS.COVERS }], // references to covers for the track
@@ -32,6 +33,9 @@ trackSchema.index({ trackUrl: 1, trackId: 1 }, { unique: true }); // unique inde
 trackSchema.index({ title: 1, year: 1 }); // index on title and year
 trackSchema.index({ album: 1 }); // index on album
 trackSchema.index({ search: 1 }); // index on search
+
+// Plugins
+trackSchema.plugin(toJson); // for converting documents to JSON format
 
 /**
  * Define the model for the Track collection in the MongoDB database.

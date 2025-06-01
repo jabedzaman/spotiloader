@@ -39,7 +39,7 @@ export const searchWorker = new Worker(
     // 5. based on the platform, run the search
     switch (search.platform) {
       case "SPOTIFY":
-        await spotify.search(search.url, search.id);
+        await spotify.search(search.url, search);
         break;
       case "YOUTUBE":
         break;
@@ -65,4 +65,8 @@ searchWorker.on("completed", (job) => {
 
 searchWorker.on("ready", () => {
   logger.info(`${CONSTS.QUEUES.SEARCH} worker is ready`);
+});
+
+searchWorker.on("failed", (job, error) => {
+  logger.error(`${CONSTS.QUEUES.SEARCH} worker failed job ${job?.id}:`, error);
 });

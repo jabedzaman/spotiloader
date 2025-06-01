@@ -1,3 +1,5 @@
+import { CONSTS as MODEL_CONSTS } from "@spotiloader/models";
+
 export const CONSTS = {
   // bullmq queues
   QUEUES: {
@@ -12,6 +14,10 @@ export const CONSTS = {
   // regex
   REGEX: {
     YOUTUBE: /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/,
-    SPOTIFY: /^(https?:\/\/)?(open\.spotify\.com\/)(track|album|playlist)\/[a-zA-Z0-9]+(\?.*)?$/,
+    SPOTIFY:
+      /^(https?:\/\/)?(open\.spotify\.com\/)(track|album|playlist)\/[a-zA-Z0-9]+(\?.*)?$/,
   },
+
+  // collections
+  COLLECTIONS: MODEL_CONSTS.COLLECTIONS,
 };

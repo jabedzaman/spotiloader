@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { ILogDoc } from "@spotiloader/types";
 import { CONSTS } from "../CONSTS";
+import { toJson } from "~/plugins";
 
 /**
  * Log Schema
@@ -24,5 +25,8 @@ const logSchema = new Schema<ILogDoc>(
     collection: CONSTS.COLLECTIONS.LOGS, // explicitly set the collection name
   }
 );
+
+// Plugins
+logSchema.plugin(toJson); // for converting documents to JSON format
 
 export const Log = mongoose.model<ILogDoc>(CONSTS.COLLECTIONS.LOGS, logSchema);

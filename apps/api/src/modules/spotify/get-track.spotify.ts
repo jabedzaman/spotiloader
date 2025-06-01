@@ -36,7 +36,7 @@ export const getTrack = async (url: string) => {
   track = await Track.create({
     trackUrl: url,
     title: trackInfo.title,
-    year: Number(trackInfo.year),
+    year: trackInfo.year,
     meta: trackInfo,
   });
 

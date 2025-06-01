@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { ICoverDoc } from "@spotiloader/types";
 import { CONSTS } from "../CONSTS";
+import { toJson } from "~/plugins";
 
 /**
  * Cover Schema
@@ -20,6 +21,9 @@ const coverSchema = new Schema<ICoverDoc>(
     collection: CONSTS.COLLECTIONS.COVERS, // explicitly set the collection name
   }
 );
+
+// Plugins
+coverSchema.plugin(toJson); // for converting documents to JSON format
 
 export const Cover = mongoose.model<ICoverDoc>(
   CONSTS.COLLECTIONS.COVERS,

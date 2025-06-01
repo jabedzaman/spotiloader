@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { ISearchDoc } from "@spotiloader/types";
 import { CONSTS } from "../CONSTS";
+import { toJson } from "~/plugins";
 
 /**
  * Search Schema
@@ -29,6 +30,9 @@ const searchSchema = new Schema<ISearchDoc>(
 // Indexes can be added to improve query performance
 searchSchema.index({ url: 1, platform: 1 }, { unique: true }); // unique index on url and platform
 searchSchema.index({ type: 1, status: 1 }); // index for type and status
+
+// Plugins
+searchSchema.plugin(toJson); // for converting documents to JSON format
 
 /**
  * Define the model for the Search collection in the MongoDB database.

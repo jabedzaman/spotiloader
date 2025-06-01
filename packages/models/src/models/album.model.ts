@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { IAlbumDoc } from "@spotiloader/types";
 import { CONSTS } from "../CONSTS";
+import { toJson } from "~/plugins";
 
 /**
  * Album Schema
@@ -26,8 +27,10 @@ const albumSchema = new Schema<IAlbumDoc>(
 );
 
 // Indexes can be added to improve query performance
-albumSchema.index({ albumUrl: 1 }, { unique: true }); // ensure albumUrl is unique
 albumSchema.index({ title: 1 }); // index on title for faster searches
+
+// Plugins
+albumSchema.plugin(toJson); // for converting documents to JSON format
 
 export const Album = mongoose.model<IAlbumDoc>(
   CONSTS.COLLECTIONS.ALBUMS,

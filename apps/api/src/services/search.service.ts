@@ -4,6 +4,7 @@ import { ApiError, httpStatus } from "~/utils";
 import { searchQueueHandler } from "~/queues";
 import { ISearchDoc } from "@spotiloader/types";
 import { Search } from "@spotiloader/models";
+import { CONSTS } from "~/CONSTS";
 
 /**
  * Search Service
@@ -45,7 +46,13 @@ export const searchService = {
 
   // list all searches with pagination
   list: async (filter: any = {}, options: any = {}) => {
-    const searches = await Search.find(filter);
+    const searches = await Search.find(filter)
+      .populate({
+        path: CONSTS.COLLECTIONS.TRACKS,
+        populate: { path: CONSTS.COLLECTIONS.COVERS },
+      })
+      .populate(CONSTS.COLLECTIONS.ALBUMS)
+      .sort({ createdAt: -1 }); // sort by createdAt in descending order
     return searches;
   },
 };

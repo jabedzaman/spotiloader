@@ -1,10 +1,11 @@
 import { ISearchDoc, ITrackDoc, SearchStatus } from "@spotiloader/types";
 import { getTrack } from "./get-track.spotify";
+import { Search } from "@spotiloader/models";
 
 /**
  *
  * @param url the URL of the track to search
- * @param searchId the ID of the search that this track belongs to
+ * @param search the search document containing the search information
  * @returns {Promise<ITrackDoc>} the track information
  */
 export const search = async (
@@ -17,12 +18,18 @@ export const search = async (
   const trackInfo = await getTrack(url);
 
   // 2. update the search info with the track info
-  // search.tracks.push(trackInfo); // ###FIXME: do we need to push the track info to the search?
+  // search.tracks.push(trackInfo.id); // ###FIXME: do we need to push the track info to the search?
+  // temp use model to add track
+  await Search.updateOne(
+    { _id: search._id },
+    { $push: { tracks: trackInfo.id } }
+  );
 
   // 3. update the search status
   search.status = SearchStatus.COMPLETED;
 
-  // 4. return the track info
+  // 4. update the search with the track info
   await search.save();
+
   return trackInfo;
 };

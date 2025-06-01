@@ -9,7 +9,7 @@ export interface ITrack {
   trackId?: string;
   title: string;
   duration?: number;
-  year?: number;
+  year?: string;
   meta?: Map<any, any>;
 
   covers: ICover[] | ObjectId[] | string[];
