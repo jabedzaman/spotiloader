@@ -12,6 +12,7 @@ export interface ITrack {
   duration?: number;
   cached: {
     on_disk: boolean;
+    disk_path?: string;
     on_s3: boolean;
     status: "pending" | "downloading" | "done" | "error";
     error?: string;

@@ -27,6 +27,7 @@
         "typescript": "^5.8.3"
     },
     "dependencies": {
+        "@aws-sdk/client-s3": "^3.821.0",
         "@distube/ytdl-core": "^4.16.10",
         "@spotiloader/models": "workspace:*",
         "@spotiloader/types": "workspace:*",

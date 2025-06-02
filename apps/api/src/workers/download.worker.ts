@@ -4,6 +4,7 @@ import { Worker } from "bullmq";
 import { CONSTS } from "~/CONSTS";
 import { redis } from "~/libs";
 import { spotify } from "~/modules";
+import { uploadQueueHandler } from "~/queues";
 import { logger } from "~/utils";
 
 /**
@@ -24,7 +25,6 @@ export const downlaodWorker = new Worker(
 
     // 2. get the track from the database
     const track = await Track.findById(data.trackId).populate("search"); // find the track by ID and convert it to a plain object
-    console.log(JSON.stringify(track, null, 2));
     if (!track) {
       return { success: false, message: "Track not found" };
     }
@@ -36,16 +36,20 @@ export const downlaodWorker = new Worker(
 
     // 4. check already cached on disk
     if (track.cached.on_disk) {
-      // ##TODO: upload to s3 && update track.cached.on_s3
       // inform the s3 uploader to upload the track to s3
+      await uploadQueueHandler.add({ trackId: track.id });
     }
 
     // 5. download based on platform
     const { platform } = track.search as ISearchDoc;
+    let path: string | undefined;
     try {
       switch (platform) {
         case Platform.SPOTIFY:
-          await spotify.downloadTrack(track);
+          const { filename } = await spotify.downloadTrack(track);
+          path = `./cache/spotify/${filename}`; // store the path to the downloaded file
+          track.cached.disk_path = path; // update the track.cached.disk_path
+          await track.save(); // save the updated track
           break;
         // Add other platforms here as needed
         default:
@@ -54,7 +58,13 @@ export const downlaodWorker = new Worker(
 
       // 6. update the track status to downloaded
       track.cached.on_disk = true; // Mark as cached on disk
-      // inform the s3 uploader to upload the track to s3
+      await track.save(); // Save the updated track
+
+      // 7. inform the s3 uploader to upload the track to s3
+      await uploadQueueHandler.add({ trackId: track.id });
+
+      // 8. return the success message
+      return { success: true, message: "track downloaded successfully" };
     } catch (error) {
       logger.error(
         `error downloading track ${track.id} from platform ${platform}:`,
@@ -70,6 +80,12 @@ export const downlaodWorker = new Worker(
 );
 
 // === Event listeners for the search worker ===
+downlaodWorker.on("active", (job) => {
+  logger.info(
+    `${CONSTS.QUEUES.DOWNLOAD} worker started processing job ${job.id}`
+  );
+});
+
 downlaodWorker.on("completed", (job) => {
   logger.info(`${CONSTS.QUEUES.SEARCH} worker completed job ${job.id}`);
 });

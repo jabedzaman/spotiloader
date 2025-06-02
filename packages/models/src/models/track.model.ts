@@ -18,6 +18,7 @@ const trackSchema = new Schema<ITrackDoc>(
     year: { type: String }, // year of release
     cached: {
       on_disk: { type: Boolean, default: false }, // whether the track is cached on disk
+      disk_path: { type: String }, // path to the cached track on disk
       status: {
         type: String,
         enum: ["pending", "downloading", "done", "error"], // status of the caching process

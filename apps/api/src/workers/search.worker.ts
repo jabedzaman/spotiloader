@@ -59,6 +59,12 @@ export const searchWorker = new Worker(
 );
 
 // === Event listeners for the search worker ===
+searchWorker.on("active", (job) => {
+  logger.info(
+    `${CONSTS.QUEUES.SEARCH} worker started processing job ${job.id}`
+  );
+});
+
 searchWorker.on("completed", (job) => {
   logger.info(`${CONSTS.QUEUES.SEARCH} worker completed job ${job.id}`);
 });

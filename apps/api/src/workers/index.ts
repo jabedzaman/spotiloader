@@ -1,5 +1,6 @@
 import { searchWorker } from "./search.worker";
 import { downlaodWorker } from "./download.worker";
+import { uploadWorker } from "./upload.worker";
 
 /**
  * Shutdown Workers
@@ -7,5 +8,9 @@ import { downlaodWorker } from "./download.worker";
  * It ensures that all jobs are completed before closing the worker.
  */
 export const shutdownWorkers = async () => {
-  Promise.all([searchWorker.close(), downlaodWorker.close()]);
+  Promise.all([
+    searchWorker.close(),
+    downlaodWorker.close(),
+    uploadWorker.close(),
+  ]);
 };
