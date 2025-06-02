@@ -13,7 +13,7 @@ import {
   ISearch,
   ITrack,
   ICover,
-} from "@spotiloader/types"; // adjust path if needed
+} from "@spotiloader/types";
 import { Schema } from "mongoose";
 
 export const Searches: React.FC = () => {

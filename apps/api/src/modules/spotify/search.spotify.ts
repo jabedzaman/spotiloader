@@ -15,7 +15,7 @@ export const search = async (
   // ##TODO: check url parsing and validation
 
   // 1. get the track info
-  const trackInfo = await getTrack(url);
+  const trackInfo = await getTrack(url, search.id);
 
   // 2. update the search info with the track info
   // search.tracks.push(trackInfo.id); // ###FIXME: do we need to push the track info to the search?

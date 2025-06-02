@@ -2,6 +2,7 @@ import * as Spotdl from "spottydl";
 import { Cover, Track } from "@spotiloader/models";
 import { ITrackDoc } from "@spotiloader/types";
 import { ApiError, httpStatus } from "~/utils";
+import { downloadQueueHandler } from "~/queues";
 
 /**
  *
@@ -9,7 +10,7 @@ import { ApiError, httpStatus } from "~/utils";
  * @param searchId the ID of the search that this track belongs to
  * @returns
  */
-export const getTrack = async (url: string) => {
+export const getTrack = async (url: string, searchId: string) => {
   let track: ITrackDoc | null = null;
 
   // 1. in case already in database, return the track
@@ -42,8 +43,12 @@ export const getTrack = async (url: string) => {
 
   // 6. add the cover to the track, & connect the track to the search
   track.covers.push(cover.id);
+  track.search = searchId; // assuming searchId is part of the trackInfo
   await track.save();
 
-  // 7. return the track
+  // 7. inform the download worker to download the track
+  await downloadQueueHandler.add({ trackId: track.id });
+
+  // 8. return the track
   return track;
 };
