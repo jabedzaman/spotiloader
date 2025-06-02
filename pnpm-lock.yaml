@@ -43,6 +43,9 @@ importers:
       moment:
         specifier: ^2.30.1
         version: 2.30.1
+      mongoose:
+        specifier: ^8.15.1
+        version: 8.15.1
       spottydl:
         specifier: ^0.2.7
         version: 0.2.7

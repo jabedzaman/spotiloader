@@ -4,6 +4,7 @@ import { config } from "~/config";
 import { createHttpServer } from "./app";
 import { logger } from "./utils";
 import { shutdownWorkers } from "./workers";
+import { ping } from "./health";
 
 const { HTTP_PORT, HTTP_HOST, MONGO_URI } = config;
 
@@ -38,9 +39,11 @@ const main = async (): Promise<void> => {
   await connectToDatabase();
   server = createHttpServer();
 
-  server.listen(HTTP_PORT, HTTP_HOST, () => {
+  server.listen(HTTP_PORT, () => {
     logger.info(`server is running at http://${HTTP_HOST}:${HTTP_PORT}`);
   });
+
+  ping();
 
   process.on("SIGINT", handleShutdown);
   process.on("SIGTERM", handleShutdown);

@@ -4,26 +4,17 @@ import "dotenv/config";
 export const configSchema = z.object({
   // === APP Configuration ===
   APP_NAME: z.coerce.string().default("@spotiloader/api"),
-  APP_ENV: z.enum(["development", "production", "test"]).default("development"),
+  APP_ENV: z.enum(["development", "production", "test"]).default("production"),
 
   // === HTTP Server Configuration ===
   HTTP_PORT: z.coerce.number().default(8080),
   HTTP_HOST: z.coerce.string().default("127.0.0.1"),
 
   // === Redis Configuration ===
-  REDIS_URI: z.coerce
-    .string()
-    .startsWith("redis://")
-    .default("redis://localhost:6379"),
+  REDIS_URI: z.coerce.string().default("redis://localhost:6379"),
 
   // === Database Configuration ===
-  MONGO_URI: z.coerce
-    .string()
-    .refine(
-      (val) => val.startsWith("mongodb://") || val.startsWith("mongodb+srv://"),
-      { message: "Invalid MongoDB URI" }
-    )
-    .default("mongodb://localhost:27017"),
+  MONGO_URI: z.coerce.string().default("mongodb://localhost:27017"),
 });
 
 export type Config = z.infer<typeof configSchema>;
