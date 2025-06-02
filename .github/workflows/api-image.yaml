@@ -29,4 +29,5 @@ jobs:
         with:
           target: api-runner
           push: true
-          tags: ghcr.io/${{ github.repository }}:latest
+          platforms: linux/arm64
+          tags: ghcr.io/${{ github.repository }}-api:latest
